@@ -184,11 +184,19 @@ def upload_file():
     billIdRegex = "bill.*\t{0,1}[:-=]{0,1}\t{0,1}[0-9a-z]+"
     receiptRegex = "receipt.*\t{0,1}[:-=]{0,1}\t{0,1}[0-9a-z]+"
     invoiceNo = re.findall(invoiceRegex + "|" + billIdRegex + "|" + receiptRegex, ocrOutput)
+    invoiceNoFinal = []
     for invoiceDetail in invoiceNo:
-      if(re.findall("[a-z]*\s{0,1}[a-z]*[\.#=:\s]",invoiceDetail)):
-        newInvoiceNo = re.findall("[a-z]*[\s:.-][\s]{0,1}(.+?)*", invoiceDetail)
+      if(re.findall("[a-z]*[.]{0,1}\s{0,1}[a-z]*[\.#=:\s]",invoiceDetail)):
+        r = re.compile(r"[a-z]*[.]{0,1}\s{0,1}[a-z]*[\.#=:\s]")
+        newInvoiceNo = r.sub(' ', invoiceDetail)
+        # newInvoiceNo = re.findall("[a-z]*[.]{0,1}\s{0,1}[a-z]*[\.#=:\s](.+?)", invoiceDetail)
         if newInvoiceNo:
           print(newInvoiceNo)
+          newInvoiceNo = newInvoiceNo.strip().split(" ")
+          print(newInvoiceNo[0])
+          invoiceNoFinal = newInvoiceNo[0]
+          break
+          
       # print(splittedInvoice)
 
     # regex2 = "\d{2}[/-](?:jan|feb|mar|apr|jun|jul|aug|sep|nov|dec|january|february|march|april|june|july|august|september|november|december|\d{2})[/-]\d{2,4}"
@@ -253,7 +261,7 @@ def upload_file():
     # print(total1)
     # for string in total:
     #   if string.contains:
-    return "{}\n{}\n{}\n{}\n{}".format(date,time,invoiceNo,maxTotal, ocrOutput)
+    return "{}\n{}\n{}\n{}\n{}\n{}".format(date,time,invoiceNoFinal, invoiceNo,maxTotal, ocrOutput)
     # f.save(secure_filename(f.filename))
 # def get_text_prediction():
 #     """
