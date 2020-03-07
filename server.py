@@ -261,7 +261,7 @@ def upload_file():
     # print(total1)
     # for string in total:
     #   if string.contains:
-    return "{}\n{}\n{}\n{}\n{}\n{}".format(date,time,invoiceNoFinal, invoiceNo,maxTotal, ocrOutput)
+    return "Date:{}\nTime: {}\nInvoice No: {}\nBill Amount:  {}\nInvoice List: {}\nOCR Conversion: {}".format(date,time,invoiceNoFinal, maxTotal, invoiceNo, ocrOutput)
     # f.save(secure_filename(f.filename))
 # def get_text_prediction():
 #     """
